@@ -63,7 +63,7 @@ Make sure to format the response as a JSON object following this structure and f
 const findDietPlan = async (req, res, next) => {
 
     try {
-        const userId = req.body.user.userId; // Extract userId from request params
+        const userId = req.body.userId; // Extract userId from request params
 
         // Find diet plan by userId
         const dietPlan = await DietPlan.findOne({ userId });
@@ -82,6 +82,29 @@ const findDietPlan = async (req, res, next) => {
 
 
 }
+
+
+const getAll = async (req, res, next) => {
+
+    try {
+     
+        // Find diet plan by userId
+        const dietPlan = await DietPlan.find({  });
+
+        if (!dietPlan) {
+            return res.status(404).json({ message: "No diet plan found for this user." });
+        }
+
+
+
+        return res.status(200).json({ message: "Diet plan fetched successfully!", data: dietPlan });
+    } catch (error) {
+        console.error("Error fetching diet plan:", error);
+        return res.status(500).json({ message: "Failed to fetch diet plan", error: error.message });
+    }
+
+
+}
 module.exports = {
-    createDietPlan, findDietPlan
+    createDietPlan, findDietPlan,getAll
 };
